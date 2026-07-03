@@ -47,4 +47,17 @@ public partial class MainViewModel : ObservableObject
         }
         catch (Exception ex) { Status = "Error: " + ex.Message; }
     }
+    [RelayCommand]
+    private void OpenRoom(RoomModel? room)
+    {
+        if (room is null) return;
+        if (string.IsNullOrWhiteSpace(Username))
+        {
+            Status = "Enter a username first.";
+            return;
+        }
+
+        var window = new ChatWindow(ServerUrl, room, Username.Trim());
+        window.Show();
+    }
 }

@@ -8,32 +8,53 @@
         Title="Chat - Rooms" Height="450" Width="800">
     <Grid Margin="12">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- connection row -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
-            <TextBlock Text="Server:" VerticalAlignment="Center" Margin="0,0,4,0"/>
-            <TextBox Text="{Binding ServerUrl}" Width="190" Margin="0,0,12,0"/>
-            <TextBlock Text="Username:" VerticalAlignment="Center" Margin="0,0,4,0"/>
-            <TextBox Text="{Binding Username}" Width="110" Margin="0,0,12,0"/>
-            <Button Content="Load Rooms" Command="{Binding LoadRoomsCommand}"/>
-        </StackPanel>
+        <!-- messages -->
+        <ListBox Grid.Row="0" ItemsSource="{Binding Messages}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border CornerRadius="4" Padding="6,3" Margin="0,2">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Style.Triggers>
+                                    <!-- tint my own messages -->
+                                    <DataTrigger Binding="{Binding Mine}" Value="True">
+                                        <Setter Property="Background" Value="#E8F0FE"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <StackPanel>
+                            <TextBlock>
+                                <Run Text="{Binding User}" FontWeight="Bold"/>
+                                <Run Text="  "/>
+                                <Run Text="{Binding SentAt, StringFormat=HH:mm}"
+                                     Foreground="Gray" FontSize="11"/>
+                            </TextBlock>
+                            <TextBlock Text="{Binding Content}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox Grid.Row="2" ItemsSource="{Binding Rooms}" DisplayMemberPath="Name"
+         MouseDoubleClick="Rooms_MouseDoubleClick"/>
+        <!-- status line -->
+        <TextBlock Grid.Row="1" Text="{Binding Status}" Foreground="Gray" Margin="0,6,0,0"/>
 
-        <TextBlock Grid.Row="1" Text="Rooms" FontWeight="Bold" Margin="0,0,0,4"/>
-
-        <ListBox Grid.Row="2" ItemsSource="{Binding Rooms}" DisplayMemberPath="Name"/>
-
-        <!-- create room row -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,8,0,0">
-            <TextBox Text="{Binding NewRoomName}" Width="190" Margin="0,0,8,0"/>
-            <Button Content="Create Room" Command="{Binding CreateRoomCommand}"/>
-        </StackPanel>
-
-        <TextBlock Grid.Row="4" Text="{Binding Status}" Foreground="Gray" Margin="0,8,0,0"/>
+        <!-- input row: type + Enter, or click Send -->
+        <DockPanel Grid.Row="2" Margin="0,6,0,0">
+            <Button DockPanel.Dock="Right" Content="Send" Width="72" Margin="8,0,0,0"
+                    Command="{Binding SendCommand}"/>
+            <TextBox Text="{Binding Draft, UpdateSourceTrigger=PropertyChanged}"
+                     KeyDown="Draft_KeyDown"/>
+        </DockPanel>
     </Grid>
 </Window>
