@@ -3,10 +3,10 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ChatClient.Models;
-using ChatClient.Services;
+using ChatCLient.Models;
+using ChatCLient.Services;
 
-namespace ChatClient.ViewModels;
+namespace ChatCLient.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {

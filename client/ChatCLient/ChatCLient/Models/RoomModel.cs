@@ -1,4 +1,4 @@
-namespace ChatClient.Models;
+namespace ChatCLient.Models;
 
 public class RoomModel
 {
