@@ -1,0 +1,18 @@
+# Normalize line endings across macOS and Windows.
+# Git stores text with LF and checks out with the platform's native endings,
+# so editing the same files on both machines won't create noisy diffs.
+* text=auto
+
+# Keep these scripts with a fixed ending regardless of platform
+*.sh   text eol=lf
+*.cmd  text eol=crlf
+*.bat  text eol=crlf
+*.ps1  text eol=crlf
+
+# Treat common binary types as binary (never touch their bytes)
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.pdf  binary

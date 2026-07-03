@@ -5,8 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatCLient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Chat - Rooms" Height="450" Width="800">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <!-- connection row -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="Server:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <TextBox Text="{Binding ServerUrl}" Width="190" Margin="0,0,12,0"/>
+            <TextBlock Text="Username:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <TextBox Text="{Binding Username}" Width="110" Margin="0,0,12,0"/>
+            <Button Content="Load Rooms" Command="{Binding LoadRoomsCommand}"/>
+        </StackPanel>
+
+        <TextBlock Grid.Row="1" Text="Rooms" FontWeight="Bold" Margin="0,0,0,4"/>
+
+        <ListBox Grid.Row="2" ItemsSource="{Binding Rooms}" DisplayMemberPath="Name"/>
+
+        <!-- create room row -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,8,0,0">
+            <TextBox Text="{Binding NewRoomName}" Width="190" Margin="0,0,8,0"/>
+            <Button Content="Create Room" Command="{Binding CreateRoomCommand}"/>
+        </StackPanel>
+
+        <TextBlock Grid.Row="4" Text="{Binding Status}" Foreground="Gray" Margin="0,8,0,0"/>
     </Grid>
 </Window>
