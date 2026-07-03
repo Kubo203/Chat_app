@@ -41,7 +41,7 @@ public partial class ChatViewModel : ObservableObject
         try
         {
             Status = "Loading history...";
-            var history = await _api.GetMessagesAsync(_baseUrl, _roomId, _me);
+            var history = await _api.GetChatMessagesAsync(_baseUrl, _roomId, _me);
             Messages.Clear();
             foreach (var m in history) Messages.Add(m);
 
